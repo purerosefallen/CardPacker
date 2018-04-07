@@ -1,5 +1,6 @@
 #!/bin/bash
-rm -rf ./output/*
+rm -rf ./output
+mkdir output
 mkdir ./output/deck
 mkdir ./output/docs
 mkdir ./output/pics
@@ -25,7 +26,8 @@ find ./archive/ | grep "thumbnail" | xargs -I {} rm -rf {}
 find ./archive/ | grep -P "field/.+\.jpg" | xargs -I {} mv -f {} ./output/pics/field/
 find ./archive/ | grep ".jpg" | xargs -I {} mv -f {} ./output/pics/
 
-rm -rf database/*
+rm -rf database
+mkdir database
 rm -rf new.cdb
 
 find ./archive/ | grep ".cdb" | xargs -I {} bash -c "mv -f {} database/\$RANDOM\$RANDOM\$RANDOM.cdb"
@@ -58,7 +60,8 @@ echo "update datas set ot=replace(ot,'1','4');" | sqlite3 new.cdb
 echo "update datas set ot=replace(ot,'2','4');" | sqlite3 new.cdb
 echo "update datas set ot=replace(ot,'3','4');" | sqlite3 new.cdb
 
-rm -rf ydk/*
+rm -rf ydk
+mkdir ydk
 java -jar ./jar/cdb_to_ydk.jar new.cdb
 
 cd ydk

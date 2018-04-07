@@ -2,7 +2,7 @@
 /database/*
 /ydk/*
 /output/*
-new.cdb
+/new.cdb
 *.7z
 *.rar
 *.zip

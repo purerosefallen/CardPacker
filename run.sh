@@ -11,9 +11,9 @@ mkdir ./output/sound/custom
 mkdir ./output/sound/BGM
 mkdir ./output/sound/BGM/custom
 
-find ./archive/*.rar | xargs -I {} 7z x -oarchive -y {}
-find ./archive/*.zip | xargs -I {} 7z x -oarchive -y {}
-find ./archive/*.7z | xargs -I {} 7z x -oarchive -y {}
+find ./archive/*.rar | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM -y {}"
+find ./archive/*.zip | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM -y {}"
+find ./archive/*.7z | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM -y {}"
 rm -rf archive/*.rar archive/*.zip archive/*.7z
 
 find ./archive/ | grep ".lua" | xargs -I {} mv -f {} ./output/script/

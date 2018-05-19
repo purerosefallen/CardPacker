@@ -11,9 +11,9 @@ mkdir ./output/sound/custom
 mkdir ./output/sound/BGM
 mkdir ./output/sound/BGM/custom
 
-find ./archive/*.rar | xargs -I {} 7z x -oarchive/$(bash -c "echo \$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM") -y {}
-find ./archive/*.zip | xargs -I {} 7z x -oarchive/$(bash -c "echo \$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM") -y {}
-find ./archive/*.7z | xargs -I {} 7z x -oarchive/$(bash -c "echo \$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM") -y {}
+find ./archive/*.rar | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
+find ./archive/*.zip | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
+find ./archive/*.7z | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
 rm -rf archive/*.rar archive/*.zip archive/*.7z
 
 find ./archive/ | grep ".lua" | xargs -I {} mv -f {} ./output/script/
@@ -30,7 +30,7 @@ rm -rf database
 mkdir database
 rm -rf new.cdb
 
-find ./archive/ | grep ".cdb" | xargs -I {} mv -f {} database/$(bash -c "echo \$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM").cdb
+find ./archive/ | grep ".cdb" | xargs -I {} bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
 ls database/*.cdb | xargs -I {} sqlite3 {} .dump | sqlite3 new.cdb
 
 echo "update texts set desc=replace(desc,'①效果','①的效果');" | sqlite3 new.cdb

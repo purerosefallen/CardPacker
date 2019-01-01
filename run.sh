@@ -16,21 +16,23 @@ find ./archive/*.zip | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RAN
 find ./archive/*.7z | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
 rm -rf archive/*.rar archive/*.zip archive/*.7z
 
-find ./archive/ | grep ".lua" | xargs -I {} mv -f {} ./output/script/
-find ./archive/ | grep ".txt" | xargs -I {} mv -f {} ./output/docs/
-find ./archive/ | grep ".mp3" | xargs -I {} mv -f {} ./output/sound/BGM/custom/
-find ./archive/ | grep ".ogg" | xargs -I {} mv -f {} ./output/sound/BGM/custom/
-find ./archive/ | grep ".wav" | xargs -I {} mv -f {} ./output/sound/custom/
+find ./archive/ -name *.lua | xargs -I {} mv -f {} ./output/script/
+find ./archive/ -name *.txt | xargs -I {} mv -f {} ./output/docs/
+find ./archive/ -name *.mp3 | xargs -I {} mv -f {} ./output/sound/BGM/custom/
+find ./archive/ -name *.ogg | xargs -I {} mv -f {} ./output/sound/BGM/custom/
+find ./archive/ -name *.wav | xargs -I {} mv -f {} ./output/sound/custom/
 
-find ./archive/ | grep "thumbnail" | xargs -I {} rm -rf {}
-find ./archive/ | grep -P "field/.+\.jpg" | xargs -I {} mv -f {} ./output/pics/field/
-find ./archive/ | grep ".jpg" | xargs -I {} mv -f {} ./output/pics/
+find ./archive/ -name thumbnail | xargs rm -rf
+find ./archive/ -name *.jpg | grep "/field/" | xargs -I {} mv -f {} ./output/pics/field/
+find ./archive/ -name *.jpg | xargs -I {} mv -f {} ./output/pics/
+find ./archive/ -name *.png | grep "/field/" | xargs -I {} mv -f {} ./output/pics/field/
+find ./archive/ -name *.png | xargs -I {} mv -f {} ./output/pics/
 
 rm -rf database
 mkdir database
 rm -rf new.cdb
 
-find ./archive/ | grep ".cdb" | xargs -I {} bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
+find ./archive/ -name *.cdb | xargs -I {} bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
 ls database/*.cdb | xargs -I {} sqlite3 {} .dump | sqlite3 new.cdb
 
 echo "update texts set desc=replace(desc,'①效果','①的效果');" | sqlite3 new.cdb
@@ -64,13 +66,14 @@ rm -rf ydk
 mkdir ydk
 java -jar ./jar/cdb_to_ydk.jar new.cdb
 
+
 cd ydk
-ls | xargs -I {} mv -f {} $(date +%m.%d){}
+ls | xargs -I {} mv -f {} $1_{}
 cd ..
 
 mv -f new.cdb ./output/
 mv -f ydk/* ./output/deck/
 
 cd ./output/
-7z a -mx9 ../$(date +%m.%d).7z *
+7z a -mx9 ../$1.7z *
 cd ..

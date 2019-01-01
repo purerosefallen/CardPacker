@@ -1,4 +1,7 @@
 #!/bin/bash
+
+export PROCESS_COUNT=$(grep -c "processor" /proc/cpuinfo)
+
 rm -rf ./output
 mkdir output
 mkdir ./output/deck

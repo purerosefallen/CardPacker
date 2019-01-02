@@ -14,29 +14,29 @@ mkdir ./output/sound/custom
 mkdir ./output/sound/BGM
 mkdir ./output/sound/BGM/custom
 
-find ./archive/*.rar | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
-find ./archive/*.zip | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
-find ./archive/*.7z | xargs -I {} bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
+find ./archive/*.rar | xargs -I {} -P $PROCESS_COUNT bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
+find ./archive/*.zip | xargs -I {} -P $PROCESS_COUNT bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
+find ./archive/*.7z | xargs -I {} -P $PROCESS_COUNT bash -c "7z x -oarchive/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM -y '{}'"
 rm -rf archive/*.rar archive/*.zip archive/*.7z
 
-find ./archive/ -name *.lua | xargs -I {} mv -f {} ./output/script/
-find ./archive/ -name *.txt | xargs -I {} mv -f {} ./output/docs/
-find ./archive/ -name *.mp3 | xargs -I {} mv -f {} ./output/sound/BGM/custom/
-find ./archive/ -name *.ogg | xargs -I {} mv -f {} ./output/sound/BGM/custom/
-find ./archive/ -name *.wav | xargs -I {} mv -f {} ./output/sound/custom/
+find ./archive/ -name *.lua | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/script/
+find ./archive/ -name *.txt | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/docs/
+find ./archive/ -name *.mp3 | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/sound/BGM/custom/
+find ./archive/ -name *.ogg | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/sound/BGM/custom/
+find ./archive/ -name *.wav | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/sound/custom/
 
 find ./archive/ -name thumbnail | xargs rm -rf
-find ./archive/ -name *.jpg | grep "/field/" | xargs -I {} mv -f {} ./output/pics/field/
-find ./archive/ -name *.jpg | xargs -I {} mv -f {} ./output/pics/
-find ./archive/ -name *.png | grep "/field/" | xargs -I {} mv -f {} ./output/pics/field/
-find ./archive/ -name *.png | xargs -I {} mv -f {} ./output/pics/
+find ./archive/ -name *.jpg | grep "/field/" | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/pics/field/
+find ./archive/ -name *.jpg | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/pics/
+find ./archive/ -name *.png | grep "/field/" | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/pics/field/
+find ./archive/ -name *.png | xargs -I {} -P $PROCESS_COUNT mv -f {} ./output/pics/
 
 rm -rf database
 mkdir database
 rm -rf new.cdb
 
-find ./archive/ -name *.cdb | xargs -I {} bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
-ls database/*.cdb | xargs -I {} sqlite3 {} .dump | sqlite3 new.cdb
+find ./archive/ -name *.cdb | xargs -I {} -P $PROCESS_COUNT bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
+ls database/*.cdb | xargs -I {} -P $PROCESS_COUNT sqlite3 {} .dump | sqlite3 new.cdb
 
 echo "update texts set desc=replace(desc,'①效果','①的效果');" | sqlite3 new.cdb
 echo "update texts set desc=replace(desc,'②效果','②的效果');" | sqlite3 new.cdb
@@ -71,7 +71,7 @@ java -jar ./jar/cdb_to_ydk.jar new.cdb
 
 
 cd ydk
-ls | xargs -I {} mv -f {} $1_{}
+ls | xargs -I {} -P $PROCESS_COUNT mv -f {} $1_{}
 cd ..
 
 mv -f new.cdb ./output/

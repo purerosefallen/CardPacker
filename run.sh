@@ -35,8 +35,8 @@ rm -rf database
 mkdir database
 rm -rf new.cdb
 
-find ./archive/ -name *.cdb | xargs -I {} -P $PROCESS_COUNT bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
-ls database/*.cdb | xargs -I {} -P $PROCESS_COUNT sqlite3 {} .dump | sqlite3 new.cdb
+find ./archive/ -name *.cdb | xargs -I {} bash -c "mv -f '{}' database/\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM\$RANDOM.cdb"
+ls database/*.cdb | xargs -I {} sqlite3 {} .dump | sqlite3 new.cdb
 
 echo "update texts set desc=replace(desc,'①效果','①的效果');" | sqlite3 new.cdb
 echo "update texts set desc=replace(desc,'②效果','②的效果');" | sqlite3 new.cdb

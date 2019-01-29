@@ -60,10 +60,7 @@ echo "update texts set desc=replace(desc,'⑧:','⑧：');" | sqlite3 new.cdb
 echo "update texts set desc=replace(desc,'⑨:','⑨：');" | sqlite3 new.cdb
 echo "update texts set desc=replace(desc,'⑩:','⑩：');" | sqlite3 new.cdb
 
-echo "update datas set ot=replace(ot,'0','4');" | sqlite3 new.cdb
-echo "update datas set ot=replace(ot,'1','4');" | sqlite3 new.cdb
-echo "update datas set ot=replace(ot,'2','4');" | sqlite3 new.cdb
-echo "update datas set ot=replace(ot,'3','4');" | sqlite3 new.cdb
+echo "update datas set ot=4;" | sqlite3 new.cdb
 
 rm -rf ydk
 mkdir ydk

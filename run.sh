@@ -64,7 +64,7 @@ echo "update datas set ot=4;" | sqlite3 new.cdb
 
 rm -rf ydk
 mkdir ydk
-java -jar ./jar/cdb_to_ydk.jar new.cdb
+/usr/lib/jvm/java-8-openjdk-amd64/bin/java -jar ./jar/cdb_to_ydk.jar new.cdb
 
 
 cd ydk
